@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import createHistory from "history/createBrowserHistory"
 
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+
 import App from "./App"
 import Api from "./Api"
 import configureStore from "./redux/store"
@@ -17,6 +19,8 @@ const { store, persistor } = configureStore(initialState, history, { api })
 devlog("index.js", "store", store, "persistor", persistor)
 
 export default ReactDOM.render(
-  <App store={store} history={history} persistor={persistor} />,
+  <MuiThemeProvider>
+    <App store={store} history={history} persistor={persistor} />
+  </MuiThemeProvider>,
   document.getElementById("root") || document.createElement("root")
 )
