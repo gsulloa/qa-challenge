@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { withRouter } from "react-router"
 import PropTypes from "prop-types"
+import queryString from "query-string"
 
 import Paper from "material-ui/Paper"
 import Card from "material-ui/Card/Card"
@@ -16,16 +18,17 @@ import Form, { Button } from "../components/Form"
 
 import { loginUser } from "../redux/modules/authentication"
 import { push } from "react-router-redux"
+import { devlog } from "../utils/log"
 
-const mapStateToProps = state => ({
-  authenticated: state.authentication.isAuthenticated,
-  fetching: state.authentication.fetching,
-})
-const mapDispatchToProps = dispatch => ({
-  loginUser: creds => dispatch(loginUser(creds)),
-  goIndex: () => dispatch(push("/")),
-})
 class Login extends Component {
+  static propTypes = {
+    loginUser: PropTypes.func,
+    authenticated: PropTypes.bool,
+    goIndex: PropTypes.func,
+    fetching: PropTypes.bool,
+    code: PropTypes.string,
+  }
+
   state = {
     email: "",
     password: "",
@@ -48,11 +51,15 @@ class Login extends Component {
     })
   }
   componentWillMount = () => {
+    if (this.props.code) {
+      devlog("Code found!")
+    }
     if (this.props.authenticated) {
       this.props.goIndex()
     }
   }
   render = () => {
+    devlog("Login", this.props, this.state)
     return (
       <ContainerCenter>
         <Paper zDepth={4}>
@@ -102,11 +109,18 @@ class Login extends Component {
     )
   }
 }
-Login.propTypes = {
-  loginUser: PropTypes.func,
-  authenticated: PropTypes.bool,
-  goIndex: PropTypes.func,
-  fetching: PropTypes.bool,
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+const mapStateToProps = (state, ownProps) => {
+  const query = queryString.parse(ownProps.location.search)
+  return {
+    authenticated: state.authentication.isAuthenticated,
+    fetching: state.authentication.fetching,
+    code: query.code,
+  }
+}
+const mapDispatchToProps = dispatch => ({
+  loginUser: creds => dispatch(loginUser(creds)),
+  goIndex: () => dispatch(push("/")),
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

@@ -53,6 +53,14 @@ function login(api, body) {
   })
   //return api.post("/session", body)
 }
+
+function requestToken(github, { code }) {
+  return github.post("/login/oauth/access_token", {
+    client_id: process.env.REACT_APP_CLIENT_ID,
+    client_secret: process.env.REACT_APP_CLIENT_SECRET,
+    code,
+  })
+}
 /*
   before Actions
 */
@@ -75,6 +83,16 @@ export function loginUser(creds) {
       )
       dispatch(push(routes.homePath))
     }
+  }
+}
+
+export function loginWithGithub({ code }) {
+  return async (dispatch, getState, api) => {
+    const response = await doFetch(
+      dispatch,
+      requestToken(api.api, { code }),
+      type
+    )
   }
 }
 
