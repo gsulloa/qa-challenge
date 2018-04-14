@@ -78,17 +78,22 @@ class Login extends Component {
                     onChange={this.handlePassword}
                   />
                 </Row>
-                <Row>
-                  <Button
-                    type="submit"
-                    disabled={this.props.fetching}
-                    primary={true}
-                    fullWidth={true}
-                  >
-                    Sign in
-                  </Button>
-                  <Button fullWidth={true}>Sign up</Button>
-                </Row>
+                <Button
+                  type="submit"
+                  disabled={this.props.fetching}
+                  primary={true}
+                  fullWidth={true}
+                >
+                  Sign in
+                </Button>
+                <a
+                  href={`https://github.com/login/oauth/authorize?client_id=${
+                    process.env.REACT_APP_CLIENT_ID
+                  }&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`}
+                >
+                  <Button fullWidth={true}>Sign in with Github</Button>
+                </a>
+                <Button fullWidth={true}>Sign up</Button>
               </Form>
             </PaddedBox>
           </Card>
