@@ -12,10 +12,14 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 
 const history = createHistory()
 const api = new Api(process.env.REACT_APP_API || "http://localhost:3000")
+const github = new Api("https://github.com")
 
 // Redux required objects
 const initialState = {}
-const { store, persistor } = configureStore(initialState, history, { api })
+const { store, persistor } = configureStore(initialState, history, {
+  api,
+  github,
+})
 
 devlog("index.js", "store", store, "persistor", persistor)
 

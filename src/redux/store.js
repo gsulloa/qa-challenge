@@ -11,14 +11,14 @@ import storage from "redux-persist/lib/storage" // defaults to localStorage for 
 export default function configureStore(
   initialState = {},
   history = {},
-  { api } = {},
+  { api, github } = {},
   customStorage = storage
 ) {
   const shouldLog = process.env.NODE_ENV === "development"
 
   // Setup middleware
   const middleware = [
-    thunk.withExtraArgument({ api }),
+    thunk.withExtraArgument({ api, github }),
     promiseMiddleware(),
     routerMiddleware(history),
   ]

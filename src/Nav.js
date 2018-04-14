@@ -7,6 +7,7 @@ import styled from "styled-components"
 import renderIf from "render-if"
 
 import { logoutUser } from "./redux/modules/authentication"
+import Authentication from "./components/Authentication"
 
 import Home from "./screens/Home"
 import Login from "./screens/Login"
@@ -116,6 +117,16 @@ Route.propTypes = {
   center: PropTypes.bool,
 }
 
+const Authed = Authentication({
+  redirectURL: routes.loginPath,
+})
+const Anon = Authentication({
+  anon: true,
+  redirectURL: routes.homePath,
+})
+
+
+
 const mapStateToProps = state => ({
   isAuthenticated: state.authentication.isAuthenticated,
 })
@@ -151,8 +162,8 @@ class Navigator extends Component {
           </Nav>
         )}
         <Switch>
-          <Route exact path={routes.homePath} component={Home} />
-          <Route exact path={routes.loginPath} component={Login} marginTop={false} />
+          <Route exact path={routes.homePath} component={Authed(Home)} />
+          <Route exact path={routes.loginPath} component={Anon(Login)} marginTop={false} />
           <Route component={NotFound} title="Not found" />
         </Switch>
       </App>

@@ -1,3 +1,6 @@
 export function newError(dispatch, type, data) {
-  dispatch(`${type}_ERROR`, data)
+  dispatch({
+    type: `${type}_SET_ERROR`,
+    payload: data,
+  })
 }

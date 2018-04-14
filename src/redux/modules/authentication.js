@@ -38,6 +38,7 @@ export default function authentication(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
+        fetching: false,
       }
     default:
       return state
@@ -52,6 +53,13 @@ function login(api, body) {
     return resolve({ token: "jsonweb.eyJ1c2VySWQiOjF9.token" })
   })
   //return api.post("/session", body)
+}
+
+function requestToken(api, { code }) {
+  return
+  // return api.post("/auth/github", {
+  //   code,
+  // })
 }
 /*
   before Actions
@@ -69,11 +77,35 @@ export function loginUser(creds) {
           {
             userId: userInfo.userId,
             role: "user",
+            token: response.token
           },
-          response.token
         )
       )
       dispatch(push(routes.homePath))
+    }
+  }
+}
+
+export function loginWithGithub({ code }) {
+  return async (dispatch, getState, api) => {
+    try {
+      await doFetch(
+        dispatch,
+        requestToken(api.api, { code }),
+        type
+      )
+      const response = {
+        userInfo: { usename: "asdf" },
+        token: "j.w.token",
+        needPassword: true,
+      }
+      const doLogin = () => dispatch(receiveLogin({
+        data: { ...response.userInfo },
+        token: response.token
+      }))
+      doLogin()
+    } catch (e) {
+      newError(dispatch, type, e)
     }
   }
 }
@@ -85,7 +117,7 @@ export function logoutUser() {
   }
 }
 
-function receiveLogin(data, token) {
+function receiveLogin({ data, token }) {
   return {
     type: LOGIN_SUCCESS,
     data,

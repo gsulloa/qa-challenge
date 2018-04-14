@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { withRouter } from "react-router"
 import PropTypes from "prop-types"
 
 import Paper from "material-ui/Paper"
@@ -14,18 +15,20 @@ import {
 } from "../components/Container"
 import Form, { Button } from "../components/Form"
 
-import { loginUser } from "../redux/modules/authentication"
+import { loginUser, loginWithGithub } from "../redux/modules/authentication"
 import { push } from "react-router-redux"
+import { devlog } from "../utils/log"
 
-const mapStateToProps = state => ({
-  authenticated: state.authentication.isAuthenticated,
-  fetching: state.authentication.fetching,
-})
-const mapDispatchToProps = dispatch => ({
-  loginUser: creds => dispatch(loginUser(creds)),
-  goIndex: () => dispatch(push("/")),
-})
 class Login extends Component {
+  static propTypes = {
+    loginUser: PropTypes.func,
+    authenticated: PropTypes.bool,
+    goIndex: PropTypes.func,
+    loginWithGithub: PropTypes.func,
+    fetching: PropTypes.bool,
+    code: PropTypes.string,
+  }
+
   state = {
     email: "",
     password: "",
@@ -48,11 +51,16 @@ class Login extends Component {
     })
   }
   componentWillMount = () => {
+    if (this.props.code) {
+      devlog("Code found!", this.props.code)
+      this.props.loginWithGithub({ code: this.props.code })
+    }
     if (this.props.authenticated) {
       this.props.goIndex()
     }
   }
   render = () => {
+    devlog("Login", this.props, this.state)
     return (
       <ContainerCenter>
         <Paper zDepth={4}>
@@ -78,17 +86,22 @@ class Login extends Component {
                     onChange={this.handlePassword}
                   />
                 </Row>
-                <Row>
-                  <Button
-                    type="submit"
-                    disabled={this.props.fetching}
-                    primary={true}
-                    fullWidth={true}
-                  >
-                    Sign in
-                  </Button>
-                  <Button fullWidth={true}>Sign up</Button>
-                </Row>
+                <Button
+                  type="submit"
+                  disabled={this.props.fetching}
+                  primary={true}
+                  fullWidth={true}
+                >
+                  Sign in
+                </Button>
+                <a
+                  href={`https://github.com/login/oauth/authorize?client_id=${
+                    process.env.REACT_APP_CLIENT_ID
+                  }&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`}
+                >
+                  <Button fullWidth={true}>Sign in with Github</Button>
+                </a>
+                <Button fullWidth={true}>Sign up</Button>
               </Form>
             </PaddedBox>
           </Card>
@@ -97,11 +110,25 @@ class Login extends Component {
     )
   }
 }
-Login.propTypes = {
-  loginUser: PropTypes.func,
-  authenticated: PropTypes.bool,
-  goIndex: PropTypes.func,
-  fetching: PropTypes.bool,
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+const mapStateToProps = (state, ownProps) => {
+  const query = ownProps.location.search
+    .slice(1)
+    .split("&")
+    .reduce((prev, now) => {
+      const data = now.split("=")
+      return Object.assign(prev, { [data[0]]: data[1] })
+    }, {})
+  return {
+    authenticated: state.authentication.isAuthenticated,
+    fetching: state.authentication.fetching,
+    code: query.code,
+  }
+}
+const mapDispatchToProps = dispatch => ({
+  loginUser: creds => dispatch(loginUser(creds)),
+  loginWithGithub: code => dispatch(loginWithGithub({ code })),
+  goIndex: () => dispatch(push("/")),
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

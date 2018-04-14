@@ -11,7 +11,7 @@ export default class Api {
       return response.data
     } catch (err) {
       devlog("API error", err)
-      return err
+      throw err
     }
   }
 
