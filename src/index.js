@@ -8,6 +8,7 @@ import App from "./App"
 import Api from "./Api"
 import configureStore from "./redux/store"
 import { devlog } from "./utils/log"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 
 const history = createHistory()
 const api = new Api(process.env.REACT_APP_API || "http://localhost:3000")
