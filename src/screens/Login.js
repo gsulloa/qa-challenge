@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
+import Paper from "material-ui/Paper"
 import Card from "material-ui/Card/Card"
 import CardTitle from "material-ui/Card/CardTitle"
 import TextField from "material-ui/TextField"
@@ -54,42 +55,44 @@ class Login extends Component {
   render = () => {
     return (
       <ContainerCenter>
-        <Card>
-          <PaddedBox>
-            <CardTitle>Login</CardTitle>
-            <Form onSubmit={this.handleSubmit}>
-              <Row>
-                <TextField
-                  type="email"
-                  hintText="user@email.com"
-                  floatingLabelText="Enter your email:"
-                  value={this.state.email}
-                  onChange={this.handleEmail}
-                />
-              </Row>
-              <Row>
-                <TextField
-                  type="password"
-                  hintText="••••••••••••"
-                  floatingLabelText="Enter your password:"
-                  value={this.state.password}
-                  onChange={this.handlePassword}
-                />
-              </Row>
-              <Row>
-                <Button
-                  type="submit"
-                  disabled={this.props.fetching}
-                  primary={true}
-                  fullWidth={true}
-                >
-                  Sign in
-                </Button>
-                <Button fullWidth={true}>Sign up</Button>
-              </Row>
-            </Form>
-          </PaddedBox>
-        </Card>
+        <Paper zDepth={4}>
+          <Card>
+            <PaddedBox>
+              <CardTitle>Login</CardTitle>
+              <Form onSubmit={this.handleSubmit}>
+                <Row>
+                  <TextField
+                    type="email"
+                    hintText="user@email.com"
+                    floatingLabelText="Enter your email:"
+                    value={this.state.email}
+                    onChange={this.handleEmail}
+                  />
+                </Row>
+                <Row>
+                  <TextField
+                    type="password"
+                    hintText="••••••••••••"
+                    floatingLabelText="Enter your password:"
+                    value={this.state.password}
+                    onChange={this.handlePassword}
+                  />
+                </Row>
+                <Row>
+                  <Button
+                    type="submit"
+                    disabled={this.props.fetching}
+                    primary={true}
+                    fullWidth={true}
+                  >
+                    Sign in
+                  </Button>
+                  <Button fullWidth={true}>Sign up</Button>
+                </Row>
+              </Form>
+            </PaddedBox>
+          </Card>
+        </Paper>
       </ContainerCenter>
     )
   }
