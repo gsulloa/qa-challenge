@@ -13,7 +13,12 @@ export const ContainerRow = styled(Container)`
 export const ContainerCenter = styled(Container)`
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
+`
+
+export const PaddedBox = styled.div`
+  padding: 20px;
 `
 
 export const Row = styled.div`

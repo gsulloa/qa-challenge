@@ -1,7 +1,16 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { ContainerCenter, SpacedRow as Row, Col } from "../components/Container"
+
+import Card from "material-ui/Card/Card"
+import CardTitle from "material-ui/Card/CardTitle"
+import TextField from "material-ui/TextField"
+
+import {
+  ContainerCenter,
+  SpacedRow as Row,
+  PaddedBox,
+} from "../components/Container"
 import Form, { Button } from "../components/Form"
 
 import { loginUser } from "../redux/modules/authentication"
@@ -45,39 +54,42 @@ class Login extends Component {
   render = () => {
     return (
       <ContainerCenter>
-        <h1>Login</h1>
-        <Form onSubmit={this.handleSubmit}>
-          <Row>
-            <Col>Email</Col>
-            <Col>
-              <input
-                type="email"
-                placeholder="email"
-                value={this.state.email}
-                onChange={this.handleEmail}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>Contraseña</Col>
-            <Col>
-              <input
-                type="password"
-                placeholder="Contraseña"
-                value={this.state.password}
-                onChange={this.handlePassword}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col smOffset={3} sm={9}>
-              <Button type="submit" disabled={this.props.fetching}>
-                Sign in
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        <Card>
+          <PaddedBox>
+            <CardTitle>Login</CardTitle>
+            <Form onSubmit={this.handleSubmit}>
+              <Row>
+                <TextField
+                  type="email"
+                  hintText="user@email.com"
+                  floatingLabelText="Enter your email:"
+                  value={this.state.email}
+                  onChange={this.handleEmail}
+                />
+              </Row>
+              <Row>
+                <TextField
+                  type="password"
+                  hintText="••••••••••••"
+                  floatingLabelText="Enter your password:"
+                  value={this.state.password}
+                  onChange={this.handlePassword}
+                />
+              </Row>
+              <Row>
+                <Button
+                  type="submit"
+                  disabled={this.props.fetching}
+                  primary={true}
+                  fullWidth={true}
+                >
+                  Sign in
+                </Button>
+                <Button fullWidth={true}>Sign up</Button>
+              </Row>
+            </Form>
+          </PaddedBox>
+        </Card>
       </ContainerCenter>
     )
   }
