@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Route as RouteDom, Link, Switch, withRouter } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import styled from "styled-components"
+import renderIf from "render-if"
 
 import { logoutUser } from "./redux/modules/authentication"
 
@@ -94,12 +95,14 @@ const Body = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 50px 0 0;
+  margin: ${({ marginTop }) => (marginTop ? "50px 0 0" : "none")};
   width: 100%;
+  background: rgb(0, 188, 212);
+  height: 100%;
 `
 
-const Route = props => (
-  <Body>
+const Route = ({ marginTop = true, center = false, ...props }) => (
+  <Body marginTop={marginTop} center={center}>
     <Helmet>
       <title>{siteTitle(props.title)}</title>
     </Helmet>
@@ -109,50 +112,8 @@ const Route = props => (
 
 Route.propTypes = {
   title: PropTypes.string,
-}
-
-const Footer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: lightGray;
-`
-
-const FooterSection = styled.div`
-  display: flex;
-  flex-flow: row;
-`
-
-const FooterLeft = styled(FooterSection)``
-
-const FooterRight = styled(FooterSection)``
-
-const FooterHref = styled.a`
-  padding: 0 12px;
-  color: ${props => (props.active ? "blueviolet" : "black")};
-  text-decoration: none;
-  font-weight: lighter;
-  cursor: pointer;
-  :hover {
-    color: blueviolet;
-  }
-`
-
-const FooterLink = ({ to, label }) => (
-  <FooterHref href={to} target={"_blank"}>
-    {label}
-  </FooterHref>
-)
-
-FooterLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  marginTop: PropTypes.bool,
+  center: PropTypes.bool,
 }
 
 const mapStateToProps = state => ({
@@ -171,38 +132,29 @@ class Navigator extends Component {
     this.props.logout()
   }
   render = () => {
+    const { isAuthenticated } = this.props
     return (
       <App>
-        <Nav>
-          <NavLeft>
-            <NavLink to={routes.homePath} label="React Template" exact ignore />
-            <NavLink to={routes.customPath("/other1")} label="Other 1" />
-            <NavLink to={routes.customPath("/other2")} label="Other 2" />
-          </NavLeft>
-          <NavRight>
-            {this.props.isAuthenticated ? (
+        {renderIf(isAuthenticated)(
+          <Nav>
+            <NavLeft>
+              <NavLink
+                to={routes.homePath}
+                label="React Template"
+                exact
+                ignore
+              />
+            </NavLeft>
+            <NavRight>
               <NavButton onClick={this.logout}>Logout</NavButton>
-            ) : (
-              <NavLink to={routes.loginPath} label="Login" exact />
-            )}
-          </NavRight>
-        </Nav>
+            </NavRight>
+          </Nav>
+        )}
         <Switch>
           <Route exact path={routes.homePath} component={Home} />
-          <Route exact path={routes.loginPath} component={Login} />
+          <Route exact path={routes.loginPath} component={Login} marginTop={false} />
           <Route component={NotFound} title="Not found" />
         </Switch>
-        <Footer>
-          <FooterLeft>
-            <FooterLink to="https://google.com" label="Google" />
-          </FooterLeft>
-          <FooterRight>
-            <FooterLink
-              to="https://github.com/negebauer/react-template"
-              label="Github"
-            />
-          </FooterRight>
-        </Footer>
       </App>
     )
   }
