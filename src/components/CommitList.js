@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import Paper from 'material-ui/Paper';
+import { devlog } from "../utils/log"
+import Subheader from 'material-ui/Subheader';
 import {
   Table,
   TableBody,
@@ -22,13 +24,11 @@ class CommitList extends Component {
     showCheckboxes: false,
   };
 
-  paperStyle = {
-  width: '30%',
-  };
-  
   render() {
+    devlog("CommitList", this.props)
     return (
-      <Paper style={this.paperStyle}>
+      <Paper>
+      <Subheader>Latest commits</Subheader>
       <Table
           fixedHeader={this.state.fixedHeader}
           fixedFooter={this.state.fixedFooter}
@@ -45,7 +45,10 @@ class CommitList extends Component {
           </TableRow>
         </TableHeader>
         <TableBody>
-        <CommitItem/>
+        <CommitItem id={1} commit='[FIX] Change tabs to spaces' score={13}/>
+        <CommitItem id={2} commit='new view' score={2}/>
+        <CommitItem id={3} commit='Added that new feature' score={7}/>
+        <CommitItem id={4} commit='[DB] New migrations' score={10}/>
         </TableBody>
       </Table>
       </Paper>

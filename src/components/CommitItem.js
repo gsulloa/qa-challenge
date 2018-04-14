@@ -7,9 +7,9 @@ class CommitItem extends Component {
   render() {
     return (
       <TableRow>
-        <TableRowColumn>1</TableRowColumn>
-        <TableRowColumn>Change spaces to tabs</TableRowColumn>
-        <TableRowColumn>100</TableRowColumn>
+        <TableRowColumn>{this.props.id}</TableRowColumn>
+        <TableRowColumn>{this.props.commit}</TableRowColumn>
+        <TableRowColumn>{this.props.score}</TableRowColumn>
       </TableRow>
     );
   }

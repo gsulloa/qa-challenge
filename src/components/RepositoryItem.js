@@ -11,13 +11,12 @@ import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import FolderSharedAsset from 'material-ui/svg-icons/file/folder-shared';
 
 class RepositoryItem extends Component {
-
   render() {
     return (
       <ListItem
         leftIcon={<FolderSharedAsset/>}
-        primaryText="Repo name"
-        secondaryText="last commit date"
+        primaryText= {this.props.name}
+        secondaryText= {this.props.date}
       />
     );
   }
