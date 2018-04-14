@@ -54,12 +54,11 @@ function login(api, body) {
   //return api.post("/session", body)
 }
 
-function requestToken(github, { code }) {
-  return github.post("/login/oauth/access_token", {
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    client_secret: process.env.REACT_APP_CLIENT_SECRET,
-    code,
-  })
+function requestToken(api, { code }) {
+  return
+  // return api.post("/auth/github", {
+  //   code,
+  // })
 }
 /*
   before Actions
@@ -77,8 +76,8 @@ export function loginUser(creds) {
           {
             userId: userInfo.userId,
             role: "user",
+            token: response.token
           },
-          response.token
         )
       )
       dispatch(push(routes.homePath))
@@ -88,11 +87,25 @@ export function loginUser(creds) {
 
 export function loginWithGithub({ code }) {
   return async (dispatch, getState, api) => {
-    const response = await doFetch(
-      dispatch,
-      requestToken(api.api, { code }),
-      type
-    )
+    try {
+      await doFetch(
+        dispatch,
+        requestToken(api.api, { code }),
+        type
+      )
+      const response = {
+        userInfo: { usename: "asdf" },
+        token: "j.w.token",
+        needPassword: true,
+      }
+      const doLogin = () => dispatch(receiveLogin({
+        data: { ...response.userInfo },
+        token: response.token
+      }))
+      doLogin()
+    } catch (e) {
+      newError(dispatch, type, e)
+    }
   }
 }
 
@@ -103,7 +116,7 @@ export function logoutUser() {
   }
 }
 
-function receiveLogin(data, token) {
+function receiveLogin({ data, token }) {
   return {
     type: LOGIN_SUCCESS,
     data,

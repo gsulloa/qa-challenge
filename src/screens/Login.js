@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router"
 import PropTypes from "prop-types"
-import queryString from "query-string"
 
 import Paper from "material-ui/Paper"
 import Card from "material-ui/Card/Card"
@@ -16,7 +15,7 @@ import {
 } from "../components/Container"
 import Form, { Button } from "../components/Form"
 
-import { loginUser } from "../redux/modules/authentication"
+import { loginUser, loginWithGithub } from "../redux/modules/authentication"
 import { push } from "react-router-redux"
 import { devlog } from "../utils/log"
 
@@ -25,6 +24,7 @@ class Login extends Component {
     loginUser: PropTypes.func,
     authenticated: PropTypes.bool,
     goIndex: PropTypes.func,
+    loginWithGithub: PropTypes.func,
     fetching: PropTypes.bool,
     code: PropTypes.string,
   }
@@ -52,7 +52,8 @@ class Login extends Component {
   }
   componentWillMount = () => {
     if (this.props.code) {
-      devlog("Code found!")
+      devlog("Code found!", this.props.code)
+      this.props.loginWithGithub({ code: this.props.code })
     }
     if (this.props.authenticated) {
       this.props.goIndex()
@@ -111,7 +112,13 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const query = queryString.parse(ownProps.location.search)
+  const query = ownProps.location.search
+    .slice(1)
+    .split("&")
+    .reduce((prev, now) => {
+      const data = now.split("=")
+      return Object.assign(prev, { [data[0]]: data[1] })
+    }, {})
   return {
     authenticated: state.authentication.isAuthenticated,
     fetching: state.authentication.fetching,
@@ -120,6 +127,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = dispatch => ({
   loginUser: creds => dispatch(loginUser(creds)),
+  loginWithGithub: code => dispatch(loginWithGithub({ code })),
   goIndex: () => dispatch(push("/")),
 })
 

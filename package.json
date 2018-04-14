@@ -1,11 +1,12 @@
 {
   "name": "web",
+  "homepage": "/qa-challenge/",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "PORT=8080 react-scripts start",
-    "start": "yarn build ; source .env && serve -p $PORT -s build",
-    "build": "source .env && react-scripts build",
+    "start": "yarn build ; serve -p $PORT -s build",
+    "build": "react-scripts build",
     "lint": "eslint ./src index.js",
     "lint:fix": "eslint --fix ./src index.js",
     "test": "react-scripts test --env=jsdom",
@@ -20,7 +21,6 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "prop-types": "^15.5.10",
-    "query-string": "^6.0.0",
     "react": "^16.0.0",
     "react-chartjs": "^1.2.0",
     "react-dom": "^16.0.0",
