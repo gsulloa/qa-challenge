@@ -1,16 +1,17 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RepositoryItem from './RepositoryItem'
-import List from 'material-ui/List';
+import Dialog from "material-ui/Dialog"
+import FlatButton from "material-ui/FlatButton"
+import RepositoryItem from "./RepositoryItem"
+import List from "material-ui/List"
 import { devlog } from "../utils/log"
 import { getGHRepositories } from "../redux/modules/ghRepositories"
+import { createRepo } from "../redux/modules/repositories";
 
 class CreateRepositoryDialog extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { open: this.props.open,};
+    super(props)
+    this.state = { open: this.props.open }
   }
 
   render() {
@@ -22,7 +23,7 @@ class CreateRepositoryDialog extends React.Component {
         keyboardFocused={false}
         onClick={this.props.handleClose}
       />,
-    ];
+    ]
 
     return (
       <Dialog
@@ -31,15 +32,22 @@ class CreateRepositoryDialog extends React.Component {
         modal={false}
         open={this.props.open}
         autoScrollBodyContent={true}
-        onRequestClose={this.props.handleClose}>
-
+        onRequestClose={this.props.handleClose}
+      >
         <List>
           {this.props.ghRepos.map(repository => (
-            <RepositoryItem key={repository.name} name={repository.name} />
+            <RepositoryItem
+              key={repository.name}
+              name={repository.name}
+              onClick={() => {
+                this.props.createRepo(repository.name)
+                this.props.handleClose()
+              }}
+            />
           ))}
         </List>
       </Dialog>
-    );
+    )
   }
 }
 
@@ -50,7 +58,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGhRespo: () => dispatch(getGHRepositories()),
+  createRepo: (name) => dispatch(createRepo(name)),
 })
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateRepositoryDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  CreateRepositoryDialog
+)

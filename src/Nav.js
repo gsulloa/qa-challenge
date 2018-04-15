@@ -96,7 +96,6 @@ const Body = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: ${({ marginTop }) => (marginTop ? "50px 0 0" : "none")};
   width: 100%;
   height: 100%;
 `
@@ -145,21 +144,6 @@ class Navigator extends Component {
     const { isAuthenticated } = this.props
     return (
       <App>
-        {renderIf(isAuthenticated)(
-          <Nav>
-            <NavLeft>
-              <NavLink
-                to={routes.homePath}
-                label="React Template"
-                exact
-                ignore
-              />
-            </NavLeft>
-            <NavRight>
-              <NavButton onClick={this.logout}>Logout</NavButton>
-            </NavRight>
-          </Nav>
-        )}
         <Switch>
           <Route exact path={routes.homePath} component={Authed(Home)} />
           <Route exact path={routes.loginPath} component={Anon(Login)} marginTop={false} />

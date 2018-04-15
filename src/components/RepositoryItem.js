@@ -17,6 +17,7 @@ class RepositoryItem extends Component {
         leftIcon={<FolderSharedAsset/>}
         primaryText= {this.props.name}
         secondaryText= {this.props.date}
+        onClick={this.props.onClick}
       />
     );
   }

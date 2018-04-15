@@ -8,7 +8,7 @@ import Paper from "material-ui/Paper"
 import RepositoryItem from "./RepositoryItem"
 import CreateRepositoryDialog from "./CreateRepositoryDialog"
 import { devlog } from "../utils/log"
-import { getRepositories } from "../redux/modules/repositories"
+import { getRepositories, selectRepository } from "../redux/modules/repositories"
 import { getGHRepositories } from "../redux/modules/ghRepositories"
 
 class RepositoryList extends Component {
@@ -42,7 +42,7 @@ class RepositoryList extends Component {
         <List>
           <Subheader>Repositories you own</Subheader>
           {this.props.repositories.map(repository => (
-            <RepositoryItem key={repository.name} name={repository.name} />
+            <RepositoryItem key={repository.id} name={repository.name} onClick={() => this.props.selectRepo(repository.id)} />
           ))}
           <Divider />
           <ListItem
@@ -68,6 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getRepositories: () => dispatch(getRepositories()),
   getGhRespo: () => dispatch(getGHRepositories()),
+  selectRepo: id => dispatch(selectRepository({ repoId: id }))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RepositoryList)
