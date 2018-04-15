@@ -4,7 +4,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
-import FileFolder from 'material-ui/svg-icons/file/folder';
+import StarIcon from 'material-ui/svg-icons/toggle/star';
 import {yellow400, grey400, brown400} from 'material-ui/styles/colors';
 import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import Paper from 'material-ui/Paper';
@@ -35,7 +35,7 @@ class DeveloperRankingItem extends Component {
     return (
       <ListItem
         leftIcon={<Avatar src={this.props.image} />}
-        rightIcon={<FileFolder color={this.state.color}></FileFolder>}
+        rightIcon={<StarIcon color={this.state.color}></StarIcon>}
         primaryText= {this.props.name}
       />
     );
