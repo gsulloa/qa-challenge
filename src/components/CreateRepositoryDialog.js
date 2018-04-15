@@ -1,8 +1,9 @@
-import React from "react"
+import React, { Component } from "react"
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RepositoryItem from './RepositoryItem'
 import List from 'material-ui/List';
+import { devlog } from "../utils/log"
 
 class CreateRepositoryDialog extends React.Component {
   constructor(props) {
