@@ -6,7 +6,8 @@ import RepositoryList from '../components/RepositoryList'
 import CommitList from '../components/CommitList'
 import TestChart from '../components/TestChart';
 import RepositoryProgressChart from '../components/RepositoryProgressChart';
-import TopDevelopers from '../components/TopDevelopers';
+import DeveloperRankingList from '../components/DeveloperRankingList';
+import ContributorList from '../components/ContributorList';
 import { Container, Row, Col, NoWrapRow } from "../components/HomeContainer"
 
 const mapStateToProps = () => ({})
@@ -20,6 +21,7 @@ class Home extends Component {
       <Container>
         <NoWrapRow>
           <Col><RepositoryList/></Col>
+          <Col><ContributorList/></Col>
           <Col>
             <Row>
               <Col><TestChart/></Col>
@@ -27,7 +29,7 @@ class Home extends Component {
             <NoWrapRow>
               <Col><CommitList/></Col>
               <Col><RepositoryProgressChart/></Col>
-              <Col><TopDevelopers/></Col>
+              <Col><DeveloperRankingList/></Col>
             </NoWrapRow>
             <Row>
           </Row>
