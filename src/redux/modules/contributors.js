@@ -1,4 +1,5 @@
 import { newError } from "./error"
+import  { doFetch } from "./fetching"
 
 const SET_CONTRIBUTORS = 'SET_CONTRIBUTORS'
 const SELECT_CONTRIBUTOR = 'SELECT_CONTRIBUTOR'
@@ -61,6 +62,9 @@ export default function contributors(state = initialState, action) {
 /*
    api Fetchs
  */
+function fetchContributors(api) {
+  return api.get("/repositories/contributors")
+}
 
 /*
   before Actions
@@ -68,9 +72,8 @@ export default function contributors(state = initialState, action) {
 export function getContributors(repositoyId) {
   return async (dispatch, getState, api) => {
     try {
-      //const response = await doFetch(dispatch, login(api.api, creds), type)
-      const response = [{ name: 'repo'}]
-      dispatch(setContributors({ repositories: response }))
+      const response = await doFetch(dispatch, fetchContributors(api.api.withToken(getState().authentication.data.token)), type)
+      dispatch(setContributors({ contributors: response }))
     } catch (e) {
         newError(dispatch, type, { e })
     }
