@@ -34,8 +34,8 @@ class CommitList extends Component {
     return (
       <List>
         <Subheader>Latest commits</Subheader>
-        {this.props.commits.map(commit => {
-          const selected = this.props.selectedCommit.findIndex(e => e === 1) >= 0
+        {this.props.commits.slice(0, 5).map(commit => {
+          const selected = this.props.selectedCommit.findIndex(e => e === commit.id) >= 0
           return (
             <CommitItem
               key={commit.id}
@@ -45,8 +45,8 @@ class CommitList extends Component {
               score={commit.score}
               handleSelect={
                 selected
-                  ? () => this.props.deselectCommit(1)
-                  : () => this.props.selectCommit(1)
+                  ? () => this.props.deselectCommit(commit.id)
+                  : () => this.props.selectCommit(commit.id)
               }
             />
           )
