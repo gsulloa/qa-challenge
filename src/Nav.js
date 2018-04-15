@@ -98,7 +98,6 @@ const Body = styled.div`
   flex-direction: column;
   margin: ${({ marginTop }) => (marginTop ? "50px 0 0" : "none")};
   width: 100%;
-  background: rgb(0, 188, 212);
   height: 100%;
 `
 

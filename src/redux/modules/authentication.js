@@ -3,6 +3,7 @@ import { newError } from "./error"
 import { doFetch } from "./fetching"
 import { devlog } from "../../utils/log"
 import routes from "../../routes"
+import { userInfo } from "os";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
@@ -56,10 +57,9 @@ function login(api, body) {
 }
 
 function requestToken(api, { code }) {
-  return
-  // return api.post("/auth/github", {
-  //   code,
-  // })
+  return api.post("/auth/github", {
+    code,
+  })
 }
 /*
   before Actions
@@ -89,19 +89,14 @@ export function loginUser(creds) {
 export function loginWithGithub({ code }) {
   return async (dispatch, getState, api) => {
     try {
-      await doFetch(
+      const { jwt, ...userInfo } = await doFetch(
         dispatch,
         requestToken(api.api, { code }),
         type
       )
-      const response = {
-        userInfo: { usename: "asdf" },
-        token: "j.w.token",
-        needPassword: true,
-      }
       const doLogin = () => dispatch(receiveLogin({
-        data: { ...response.userInfo },
-        token: response.token
+        data: userInfo,
+        token: jwt,
       }))
       doLogin()
     } catch (e) {
