@@ -4,6 +4,8 @@ import { persistReducer } from "redux-persist"
 import router from "./modules/router"
 import authentication from "./modules/authentication"
 import repositories from "./modules/repositories"
+import contributors from "./modules/contributors"
+import selectedRepository from "./modules/selectedRepository"
 
 function configureReducers(storage) {
   const persistConfig = {
@@ -16,7 +18,9 @@ function configureReducers(storage) {
   const combinedReducer = combineReducers({
     router,
     authentication,
-    repositories
+    repositories,
+    contributors,
+    selectedRepository
   })
 
   const rootReducer = (state, action) => {

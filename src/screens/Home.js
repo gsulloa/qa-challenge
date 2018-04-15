@@ -1,14 +1,18 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
 import { devlog } from "../utils/log"
+import { Container, Row, Col, NoWrapRow } from "../components/HomeContainer"
+import Paper from 'material-ui/Paper';
+
+// Components
 import RepositoryList from '../components/RepositoryList'
 import CommitList from '../components/CommitList'
-import TestChart from '../components/TestChart';
-import RepositoryProgressChart from '../components/RepositoryProgressChart';
 import DeveloperRankingList from '../components/DeveloperRankingList';
 import ContributorList from '../components/ContributorList';
-import { Container, Row, Col, NoWrapRow } from "../components/HomeContainer"
+
+// Grids
+import CommitsGrid from '../components/Grids/CommitsGrid';
+import ContributorsGrid from '../components/Grids/ContributorsGrid';
 
 const mapStateToProps = () => ({})
 
@@ -21,17 +25,14 @@ class Home extends Component {
       <Container>
         <NoWrapRow>
           <Col><RepositoryList/></Col>
-          <Col><ContributorList/></Col>
+          <Col><Paper><ContributorList/></Paper></Col>
           <Col>
-            <Row>
-              <Col><TestChart/></Col>
-            </Row>
             <NoWrapRow>
-              <Col><CommitList/></Col>
-              <Col><RepositoryProgressChart/></Col>
               <Col><DeveloperRankingList/></Col>
             </NoWrapRow>
             <Row>
+            <Col><CommitsGrid/></Col>
+            <Col><ContributorsGrid/></Col>
           </Row>
           </Col>
         </NoWrapRow>

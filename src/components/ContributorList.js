@@ -7,13 +7,11 @@ import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import {yellow400, grey400, brown400} from 'material-ui/styles/colors';
 import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
-import Paper from 'material-ui/Paper';
 import ContributorItem from './ContributorItem'
 
 class ContributorList extends Component {
   render() {
     return (
-      <Paper>
       <List>
         <Subheader>Contributors</Subheader>
         <ContributorItem name='Gabo'/>
@@ -21,7 +19,6 @@ class ContributorList extends Component {
         <ContributorItem name='Roy'/>
         <ContributorItem name='Thom'/>
       </List>
-      </Paper>
     );
   }
 }

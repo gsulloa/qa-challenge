@@ -22,6 +22,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "prop-types": "^15.5.10",
+    "random-material-color": "^1.0.3",
     "react": "^16.0.0",
     "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^2.7.0",

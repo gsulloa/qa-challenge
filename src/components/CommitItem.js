@@ -33,6 +33,7 @@ class ContributorItem extends Component {
   render() {
     return (
       <ListItem
+        leftCheckbox={<Checkbox />}
         primaryText= {this.props.commit}
         secondaryText= {'Score: ' + this.props.score}
         rightIcon={<ActionStars color={this.state.color}/>}

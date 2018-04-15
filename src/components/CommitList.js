@@ -15,7 +15,6 @@ class CommitList extends Component {
 
   render() {
     return (
-      <Paper>
         <List>
         <Subheader>Latest commits</Subheader>
           <CommitItem id={1} commit='[FIX] Change tabs to spaces' score={13}/>
@@ -23,7 +22,6 @@ class CommitList extends Component {
           <CommitItem id={3} commit='Added that new feature' score={7}/>
           <CommitItem id={4} commit='[DB] New migrations' score={10}/>
       </List>
-      </Paper>
     );
   }
 }

@@ -37,14 +37,11 @@ class RepositoryList extends Component {
         {this.props.repositories.map(repository => (
           <RepositoryItem key={repository.name} name={repository.name}/>
         ))}
+        <Divider />
           <ListItem
             onClick={this.handleCreateRepositoryClick}
             leftIcon={<Add/>}
             primaryText="Add new repository"/>
-        <Divider />
-        <Subheader>Repositories you contribute</Subheader>
-        <RepositoryItem name="React"/>
-        <RepositoryItem name="Litho"/>
         <CreateRepositoryDialog open={this.state.createRepositoryDialog} handleClose={this.handleClose}/>
       </List>
       </Paper>

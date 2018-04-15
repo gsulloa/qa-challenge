@@ -17,7 +17,6 @@ const data = {
   ]
 };
 
-
 class RepositoryProgressChart extends Component {
   render() {
     return (
