@@ -9,6 +9,7 @@ import RepositoryList from '../components/RepositoryList'
 import CommitList from '../components/CommitList'
 import DeveloperRankingList from '../components/DeveloperRankingList';
 import ContributorList from '../components/ContributorList';
+import Test from "../components/Test"
 
 // Charts
 import CommitsRadarGrid from '../components/Charts/CommitRadar/CommitsGrid';
@@ -29,6 +30,7 @@ class Home extends Component {
           <Col>
             <NoWrapRow>
               <Col><DeveloperRankingList/></Col>
+              <Col><Test /></Col>
             </NoWrapRow>
             <Row>
             <Col><CommitsRadarGrid/></Col>

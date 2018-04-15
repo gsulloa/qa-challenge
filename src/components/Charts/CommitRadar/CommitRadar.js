@@ -25,7 +25,8 @@ const mapStateToProps = state => {
   return {
     data: {
       labels: ["Warnings", "Completion", "Coverage"],
-      datasets: commits.map(c => ({
+      datasets: commits.map((c,i) => ({
+        key: i,
         borderColor: randomMC.getColor(),
         backgroundColor: "rgba(255,255,255,0)",
         label: "Commit",
@@ -44,7 +45,7 @@ class CommitRadar extends Component {
   }
   render() {
     console.log(this.props, "ASDASDSD")
-    return <Radar data={this.state.data} width={300} height={300} />
+    return <Radar redraw={true} data={this.state.data} width={300} height={300} />
   }
 }
 
