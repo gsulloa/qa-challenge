@@ -1,6 +1,8 @@
 import { newError } from "./error"
 
 const SET_CONTRIBUTORS = 'SET_CONTRIBUTORS'
+const SELECT_CONTRIBUTOR = 'SELECT_CONTRIBUTOR'
+const DESELECT_CONTRIBUTOR = 'DESELECT_CONTRIBUTOR'
 
 const type = "CONTRIBUTOR"
 const initialState = {
@@ -9,6 +11,7 @@ const initialState = {
   data: {
 
   },
+  selected: [],
 }
 export default function contributors(state = initialState, action) {
   switch (action.type) {
@@ -16,6 +19,24 @@ export default function contributors(state = initialState, action) {
       return {
         ...state, // state anterior
         data: action.payload.data,
+      }
+      case SELECT_CONTRIBUTOR:
+        return {
+          ...state, // state anterior
+          selected: [
+            ...state.selected,
+            action.payload.id
+          ]
+        }
+      case DESELECT_CONTRIBUTOR: {
+        const index = state.selected.findIndex(e => e === action.payload.id)
+        return {
+          ...state, // state anterior
+          selected: [
+            ...state.selected.slice(0, index),
+              ...state.selected.slice(index + 1),
+          ]
+        }
       }
     case `${type}_FETCH_START`:
       return {
@@ -62,6 +83,23 @@ function setContributors({ contributors }) {
     type: SET_CONTRIBUTORS,
     payload: {
       data: contributors,
+    }
+  }
+}
+
+export function selectContributor({ contributorId }) {
+  return {
+    type: SELECT_CONTRIBUTOR,
+    payload: {
+      id: contributorId,
+    }
+  }
+}
+export function deselectContributor({ contributorId }) {
+  return {
+    type: DESELECT_CONTRIBUTOR,
+    payload: {
+      id: contributorId,
     }
   }
 }
