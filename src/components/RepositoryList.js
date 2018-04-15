@@ -35,7 +35,7 @@ class RepositoryList extends Component {
       <List>
         <Subheader>Repositories you own</Subheader>
         {this.props.repositories.map(repository => (
-          <RepositoryItem name={repository.name}/>
+          <RepositoryItem key={repository.name} name={repository.name}/>
         ))}
           <ListItem
             onClick={this.handleCreateRepositoryClick}
