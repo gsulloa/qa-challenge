@@ -29,7 +29,6 @@ class CreateRepositoryDialog extends React.Component {
         open={this.props.open}
         onRequestClose={this.props.handleClose}>
 
-        Holi
         <List>
           <RepositoryItem
             name="React"
