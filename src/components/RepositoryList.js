@@ -1,51 +1,62 @@
 import React, { Component } from "react"
-import { connect } from 'react-redux'
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
-import Add from 'material-ui/svg-icons/content/add';
-import Paper from 'material-ui/Paper';
-import RepositoryItem from './RepositoryItem'
-import CreateRepositoryDialog from './CreateRepositoryDialog'
-import {devlog} from '../utils/log'
+import { connect } from "react-redux"
+import { List, ListItem } from "material-ui/List"
+import Divider from "material-ui/Divider"
+import Subheader from "material-ui/Subheader"
+import Add from "material-ui/svg-icons/content/add"
+import Paper from "material-ui/Paper"
+import RepositoryItem from "./RepositoryItem"
+import CreateRepositoryDialog from "./CreateRepositoryDialog"
+import { devlog } from "../utils/log"
 import { getRepositories } from "../redux/modules/repositories"
+import { getGHRepositories } from "../redux/modules/ghRepositories"
 
 class RepositoryList extends Component {
+  static defaultProps = {
+    repositories: [],
+    ghRepos: [],
+  }
+
   state = {
     createRepositoryDialog: false,
-  };
+  }
 
   componentWillMount = () => {
     this.props.getRepositories()
+    this.props.getGhRespo()
   }
 
   handleCreateRepositoryClick = () => {
-    this.setState({createRepositoryDialog: true});
+    this.setState({ createRepositoryDialog: true })
   }
 
-    handleClose = () => {
-      this.setState({createRepositoryDialog: false});
-      console.log('this is:');
-    };
+  handleClose = () => {
+    this.setState({ createRepositoryDialog: false })
+    console.log("this is:")
+  }
 
   render() {
     devlog("RepositoryList", this.props)
     return (
       <Paper>
-      <List>
-        <Subheader>Repositories you own</Subheader>
-        {this.props.repositories.map(repository => (
-          <RepositoryItem key={repository.name} name={repository.name}/>
-        ))}
-        <Divider />
+        <List>
+          <Subheader>Repositories you own</Subheader>
+          {this.props.repositories.map(repository => (
+            <RepositoryItem key={repository.name} name={repository.name} />
+          ))}
+          <Divider />
           <ListItem
             onClick={this.handleCreateRepositoryClick}
-            leftIcon={<Add/>}
-            primaryText="Add new repository"/>
-        <CreateRepositoryDialog open={this.state.createRepositoryDialog} handleClose={this.handleClose}/>
-      </List>
+            leftIcon={<Add />}
+            primaryText="Add new repository"
+          />
+          <CreateRepositoryDialog
+            open={this.state.createRepositoryDialog}
+            handleClose={this.handleClose}
+          />
+        </List>
       </Paper>
-    );
+    )
   }
 }
 
@@ -55,7 +66,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getRepositories: () => dispatch(getRepositories())
+  getRepositories: () => dispatch(getRepositories()),
+  getGhRespo: () => dispatch(getGHRepositories()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RepositoryList);
+export default connect(mapStateToProps, mapDispatchToProps)(RepositoryList)

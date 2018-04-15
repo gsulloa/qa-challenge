@@ -1,9 +1,11 @@
 import React, { Component } from "react"
+import { connect } from "react-redux"
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RepositoryItem from './RepositoryItem'
 import List from 'material-ui/List';
 import { devlog } from "../utils/log"
+import { getGHRepositories } from "../redux/modules/ghRepositories"
 
 class CreateRepositoryDialog extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class CreateRepositoryDialog extends React.Component {
   render() {
     const actions = [
       <FlatButton
+        key={1}
         label="Cancel"
         primary={true}
         keyboardFocused={false}
@@ -27,19 +30,27 @@ class CreateRepositoryDialog extends React.Component {
         actions={actions}
         modal={false}
         open={this.props.open}
+        autoScrollBodyContent={true}
         onRequestClose={this.props.handleClose}>
 
         <List>
-          <RepositoryItem
-            name="React"
-            />
-          <RepositoryItem
-            name="Angular"
-            />
+          {this.props.ghRepos.map(repository => (
+            <RepositoryItem key={repository.name} name={repository.name} />
+          ))}
         </List>
       </Dialog>
     );
   }
 }
 
-export default CreateRepositoryDialog
+const mapStateToProps = state => ({
+  ghRepos: state.ghRepos.data,
+  //contributors: state.contributors.data[state.repositories.selected] esto es lo esperado
+})
+
+const mapDispatchToProps = dispatch => ({
+  getGhRespo: () => dispatch(getGHRepositories()),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRepositoryDialog)

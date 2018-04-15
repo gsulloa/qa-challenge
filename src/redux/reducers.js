@@ -7,6 +7,7 @@ import repositories from "./modules/repositories"
 import contributors from "./modules/contributors"
 import selectedRepository from "./modules/selectedRepository"
 import commits from "./modules/commits"
+import ghRepos from "./modules/ghRepositories"
 
 function configureReducers(storage) {
   const persistConfig = {
@@ -22,7 +23,8 @@ function configureReducers(storage) {
     repositories,
     contributors,
     selectedRepository,
-    commits
+    commits,
+    ghRepos,
   })
 
   const rootReducer = (state, action) => {

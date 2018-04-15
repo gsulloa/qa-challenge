@@ -11,7 +11,7 @@ import { devlog } from "./utils/log"
 
 const history = createHistory()
 const api = new Api(process.env.REACT_APP_API || "http://localhost:3000")
-const github = new Api("https://github.com")
+const github = new Api("https://api.github.com")
 
 // Redux required objects
 const initialState = {}
