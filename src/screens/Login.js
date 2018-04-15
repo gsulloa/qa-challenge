@@ -97,7 +97,7 @@ class Login extends Component {
                 <a
                   href={`https://github.com/login/oauth/authorize?client_id=${
                     process.env.REACT_APP_CLIENT_ID
-                  }&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`}
+                  }&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=public_repo,user,write:repo_hook`}
                 >
                   <Button fullWidth={true}>Sign in with Github</Button>
                 </a>
