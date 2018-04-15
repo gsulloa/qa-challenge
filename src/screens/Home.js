@@ -7,7 +7,7 @@ import CommitList from '../components/CommitList'
 import TestChart from '../components/TestChart';
 import RepositoryProgressChart from '../components/RepositoryProgressChart';
 import TopDevelopers from '../components/TopDevelopers';
-import { Container, Row, Col } from "../components/HomeContainer"
+import { Container, Row, Col, NoWrapRow } from "../components/HomeContainer"
 
 const mapStateToProps = () => ({})
 
@@ -18,17 +18,21 @@ class Home extends Component {
     devlog("Home", this.props)
     return (
       <Container>
-        <Row>
+        <NoWrapRow>
           <Col><RepositoryList/></Col>
-          <Col><TestChart/></Col>
-        </Row>
-        <Row>
-          <Col><CommitList/></Col>
-          <Col><RepositoryProgressChart/></Col>
-        </Row>
-        <Row>
-          <Col><TopDevelopers/></Col>
-        </Row>
+          <Col>
+            <Row>
+              <Col><TestChart/></Col>
+            </Row>
+            <NoWrapRow>
+              <Col><CommitList/></Col>
+              <Col><RepositoryProgressChart/></Col>
+              <Col><TopDevelopers/></Col>
+            </NoWrapRow>
+            <Row>
+          </Row>
+          </Col>
+        </NoWrapRow>
       </Container>
     )
   }
