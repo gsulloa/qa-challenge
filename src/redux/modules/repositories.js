@@ -82,7 +82,6 @@ export function getRepositories() {
 
 export function createRepo(name) {
   return async (dispatch, getState, api) => {
-    debugger
     try {
       const response = await doFetch(
         dispatch,
