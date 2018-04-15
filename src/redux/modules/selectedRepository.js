@@ -6,7 +6,8 @@ const type = "SELECTEDREPOSITORY"
 const initialState = {
   fetching: false,
   error: false,
-  data: [],
+  data: {
+  },
 }
 export default function selectedRepository(state = initialState, action) {
   switch (action.type) {

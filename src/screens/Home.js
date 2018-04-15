@@ -10,9 +10,9 @@ import CommitList from '../components/CommitList'
 import DeveloperRankingList from '../components/DeveloperRankingList';
 import ContributorList from '../components/ContributorList';
 
-// Grids
-import CommitsGrid from '../components/Grids/CommitsGrid';
-import ContributorsGrid from '../components/Grids/ContributorsGrid';
+// Charts
+import CommitsRadarGrid from '../components/Charts/CommitRadar/CommitsGrid';
+//import ContributorsRadarGrid from '../components/Charts/ContributorRadar/ContributorsGrid';
 
 const mapStateToProps = () => ({})
 
@@ -31,8 +31,7 @@ class Home extends Component {
               <Col><DeveloperRankingList/></Col>
             </NoWrapRow>
             <Row>
-            <Col><CommitsGrid/></Col>
-            <Col><ContributorsGrid/></Col>
+            <Col><CommitsRadarGrid/></Col>
           </Row>
           </Col>
         </NoWrapRow>
